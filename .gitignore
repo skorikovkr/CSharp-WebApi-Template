@@ -6,6 +6,9 @@
 # Sensitive configuration files
 appsettings.json
 
+# Local DB
+Sqlite/
+
 # User-specific files
 *.rsuser
 *.suo
