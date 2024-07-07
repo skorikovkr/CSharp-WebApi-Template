@@ -1,0 +1,8 @@
+// run migrations on Identity entities change.
+dotnet ef migrations add {{ migrationName }} --context {{ projectName }}.Identity.ApplicationIdentityDbContext
+// example
+dotnet ef migrations add Initial --context WebApiTemplate.Identity.ApplicationIdentityDbContext
+
+// apply migrations.
+// migrations contains annotations, which specify DbContext, so we don't need to explicitly do it ourselves.
+dotnet ef database update
