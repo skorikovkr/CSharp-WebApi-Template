@@ -47,6 +47,13 @@ namespace WebApiTemplate
 
             var app = builder.Build();
 
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var context = services.GetRequiredService<ApplicationIdentityDbContext>();
+                SeedData.Initialize(services).Wait();
+            }
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();

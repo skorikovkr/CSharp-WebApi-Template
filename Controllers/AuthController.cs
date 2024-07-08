@@ -75,7 +75,6 @@ namespace WebApiTemplate.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [Route("refresh-tokens")]
         public async Task<IActionResult> RefreshTokens(
             [FromBody(EmptyBodyBehavior = EmptyBodyBehavior.Allow)] RefreshTokenDTO? model,
