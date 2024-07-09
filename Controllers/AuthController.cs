@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.IdentityModel.Tokens;
 using WebApiTemplate.DTO.Auth;
 using WebApiTemplate.Exceptions;
 using WebApiTemplate.Identity;
@@ -131,14 +130,12 @@ namespace WebApiTemplate.Controllers
                         Errors = badRequestException.Errors
                     });
                 }
-                else if (ex is SecurityTokenException || ex is ArgumentException)
+                else
                 {
                     return BadRequest(new { 
                         Message = "token.invalid"
                     });
                 }
-                else
-                    throw;
             }
         }
 

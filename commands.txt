@@ -3,6 +3,11 @@ dotnet ef migrations add {{ migrationName }} --context {{ projectName }}.Identit
 // example
 dotnet ef migrations add Initial --context WebApiTemplate.Identity.ApplicationIdentityDbContext
 
+// run migrations on Models entities change.
+dotnet ef migrations add {{ migrationName }} --context {{ projectName }}.DataBase.ApplicationDbContext
+// example
+dotnet ef migrations add Initial --context WebApiTemplate.DataBase.ApplicationDbContext
+
 // apply migrations.
-// migrations contains annotations, which specify DbContext, so we don't need to explicitly do it ourselves.
-dotnet ef database update
+dotnet ef database update --context WebApiTemplate.DataBase.ApplicationDbContext
+dotnet ef database update --context WebApiTemplate.Identity.ApplicationIdentityDbContext

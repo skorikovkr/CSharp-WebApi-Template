@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.CookiePolicy;
 using WebApiTemplate.Identity;
 using WebApiTemplate.Services;
 using Microsoft.AspNetCore.Identity;
+using WebApiTemplate.DataBase;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApiTemplate
 {
@@ -26,6 +28,8 @@ namespace WebApiTemplate
             builder.Services.AddMvc();
 
             builder.Services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
+
+            builder.Services.AddDbContext<ApplicationDbContext>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
