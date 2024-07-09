@@ -23,6 +23,12 @@ namespace WebApiTemplate.Identity
                         var firstError = result.Errors.First();
                         throw new Exception(firstError.Code + firstError.Description);
                     }
+                    result = await EnsureRole(serviceProvider, adminID, Roles.User);
+                    if (result != null && !result.Succeeded)
+                    {
+                        var firstError = result.Errors.First();
+                        throw new Exception(firstError.Code + firstError.Description);
+                    }
                 }
             }
         }

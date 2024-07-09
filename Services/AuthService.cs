@@ -51,9 +51,10 @@ namespace WebApiTemplate.Services
                 await _userManager.UpdateAsync(user);
                 return new TokenPair()
                 {
-                    AccessToken = accessToken,
+                    AccessToken = accessToken.DecodedToken,
                     RefreshToken = refreshToken,
-                    RefreshTokenValidTo = user.RefreshTokenExpiryTime
+                    RefreshTokenValidTo = user.RefreshTokenExpiryTime,
+                    AccessTokenValidTo = accessToken.Expires
                 };
             }
             throw new UnauthenticatedException("Wrong credentials.");
@@ -113,9 +114,10 @@ namespace WebApiTemplate.Services
 
             return new TokenPair()
             { 
-                AccessToken = newAccessToken,
+                AccessToken = newAccessToken.DecodedToken,
                 RefreshToken = newRefreshToken,
-                RefreshTokenValidTo = user.RefreshTokenExpiryTime
+                RefreshTokenValidTo = user.RefreshTokenExpiryTime,
+                AccessTokenValidTo = newAccessToken.Expires
             };
         }
 
@@ -170,6 +172,7 @@ namespace WebApiTemplate.Services
                     new Claim(JwtRegisteredClaimNames.Sub, user.Id),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(ClaimTypes.Email, user.Email),
+                    new Claim("Id", user.Id)
                 };
             foreach (var userRole in userRoles)
             {

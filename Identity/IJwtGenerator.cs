@@ -4,6 +4,6 @@ namespace WebApiTemplate.Identity
 {
     public interface IJwtGenerator
     {
-        string CreateToken(IEnumerable<Claim> claims);
+        (string DecodedToken, DateTime? Expires) CreateToken(IEnumerable<Claim> claims);
     }
 }

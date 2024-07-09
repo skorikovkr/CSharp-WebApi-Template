@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.IdentityModel.Tokens;
-using System.Globalization;
 using WebApiTemplate.DTO.Auth;
 using WebApiTemplate.Exceptions;
 using WebApiTemplate.Identity;
@@ -56,7 +55,11 @@ namespace WebApiTemplate.Controllers
                 if (useCookie)
                 {
                     SetTokenCookies(tokenPair);
-                    return Ok();
+                    return Ok(new
+                    {
+                        RefreshTokenValidTo = tokenPair.RefreshTokenValidTo,
+                        AccessTokenValidTo = tokenPair.AccessTokenValidTo
+                    });
                 }
                 else
                 { 
@@ -110,6 +113,7 @@ namespace WebApiTemplate.Controllers
                     return Ok(new
                     {
                         RefreshTokenValidTo = tokenPair.RefreshTokenValidTo,
+                        AccessTokenValidTo = tokenPair.AccessTokenValidTo
                     });
                 }
                 else
@@ -127,7 +131,7 @@ namespace WebApiTemplate.Controllers
                         Errors = badRequestException.Errors
                     });
                 }
-                else if (ex is SecurityTokenException)
+                else if (ex is SecurityTokenException || ex is ArgumentException)
                 {
                     return BadRequest(new { 
                         Message = "token.invalid"
